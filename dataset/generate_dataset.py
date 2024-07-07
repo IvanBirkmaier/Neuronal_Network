@@ -264,11 +264,11 @@ for index, elem in enumerate(listOfDatesToGetData):
                                     ######                                               #######
         stockData = yf.download(stock, start=start_date, end=end_date, interval=inter)
         featureDatas = featureDatas.reset_index(drop=True).merge(stockData.reset_index(drop=True), left_index=True, right_index=True)
-        ##path = '/Users/Lenovo/Desktop/stock-price-predictions-with-lstm-neural-networks-and-twitter-sentiment/data/FeatureData.csv' #path for Laptop
-        path = '/Users/Ivan/Desktop/stock-price-predictions-with-lstm-neural-networks-and-twitter-sentiment/data/FeatureData.csv' #path for PC
+        path = '/data/features.csv' #path for PC
         featureDatas.to_csv(path, mode='a', header=not os.path.exists(path))
         print(featureDatas)
         print("Testdurchlauf fur Tag "+start_date+" erfolgreich abgeschlossen!")    
+
         ######################   FAZIT: ###############################################################################
         # WAS KANN DAS SCRIPT: Ich kann für einen definierten Tag, über die snscraper Libary mir alle  Tweets nach dem Schlagwort AAPL ziehen, diese in kleine Intervale unterteilen
         # und alle Links, Hashtags und @Mentions entfernen. So definiere Ich mir meinen Datensatz an Tweets.

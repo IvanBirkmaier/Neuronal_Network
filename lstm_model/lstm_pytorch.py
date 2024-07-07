@@ -15,7 +15,7 @@ import os
 ####################################################################################################################################################################################
 ######################################## Liest die erstellten Featuredaten als Datensatz ein. ######################################################################################
 ####################################################################################################################################################################################
-df = pd.read_csv("data\FeatureData.csv")
+df = pd.read_csv("data\features.csv")
 originalDataframe =  df.copy()
 ####################################################################################################################################################################################
 ######################################## changeDataFrame. Erstellt aus der Kopie des eingelenen Dataframes   ######################################################################################
@@ -254,7 +254,7 @@ for epoch in range(num_epochs):
     loss.backward()
     optimizer.step()
     itemToString = str(loss.item())
-    path = "models/models_with_loss_"+itemToString+".path.tar"
+    path = "results/models_with_loss_"+itemToString+".path.tar"
     saveModel(net, path)
     print("Epoche ",epoch+1," durchgelaufen! Mit einem Loss von: ", loss.item())
     loss_vals.append(loss.item())
@@ -267,7 +267,7 @@ def deleteAllModelsWhichArentTheBest():
     for i in loss_vals:
         if i != bestModelfromTraining():
             itemToString = str(i)
-            path = "models/models_with_loss_"+itemToString+".path.tar"
+            path = "results/models_with_loss_"+itemToString+".path.tar"
             os.remove(path)
           
 deleteModels = deleteAllModelsWhichArentTheBest()
@@ -275,7 +275,7 @@ deleteModels = deleteAllModelsWhichArentTheBest()
 
 def loadBestModel():
     itemToString = str(bestModelfromTraining())
-    path = "models/models_with_loss_"+itemToString+".path.tar"
+    path = "results/models_with_loss_"+itemToString+".path.tar"
     net = torch.load(path)
     net.eval()
     return net 
@@ -287,12 +287,3 @@ def modelValidation():
 
 def modelTesting():
     return np.NaN
-
-
-
-
-# ####################################### Besprechen: ###############################################################
-# # 1. Datensatz in Trainings Vali Test Set unterteilen, wie müssen die dann durchlaufen? durch 1 Model mehrere Datensätze? Forschleife um epoch Forschleife mit 
-# # If bedingung dass wenn test datensatz durchgelaufen ist, dann vali und danach test datensatz? was dann machen wenn training abgebrochen wird, dann trotzdem 
-# # mit vali und test weitermachen?
-# # 2. Durch das Model gehen, schauen wo man verbessernd ansetzen könnte 
